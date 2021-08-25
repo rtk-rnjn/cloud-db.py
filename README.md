@@ -44,7 +44,7 @@ True
 # this bascically create a get for you and handles the cooldown, if any.
 Result(success=True, message=Success, data=Data(name='Hello', value=World))
 
->>> awaitdb.get("Hello")
+>>> await db.get("Hello")
 Result(success=True, message=Success, data=Data(name='Hello', value=World))
 
 # or
@@ -75,7 +75,7 @@ Result(success=True, message=Success, data=[Data(name='Number', value=0)])
 >>> await db.delete("Hello")
 True
 
-await db.all() // []
+await db.all()
 Result(success=True, message=Success, data=[])
 ```
 
@@ -169,5 +169,6 @@ async def allbios(ctx):
 - API: https://cloud-db.ml/
 - Discord Server: https://discord.gg/nEtTMS934g
 - Wrapper Creator server: https://discord.gg/yCzcfju
+- JavaScript version: https://www.npmjs.com/package/cloud-db.js
 
 This is a really basic wrapper for the cloud-db API. Any suggestions are welcome!
