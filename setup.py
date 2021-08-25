@@ -7,7 +7,7 @@ with open("README.md") as f:
 
 # source: https://github.com/Rapptz/discord.py/blob/master/setup.py
 
-with open("alexflipnote/__init__.py") as f:
+with open("cloud_db/__init__.py") as f:
     content = f.read()
     version = search(
         r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', content, MULTILINE
