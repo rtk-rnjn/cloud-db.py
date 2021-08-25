@@ -78,22 +78,22 @@ class HTTPClient:
             else:
                 raise HTTPException(res.status, data)
 
-    def get(self, name: str) -> Coroutine[Any, Any, dict[str, Any]]:
+    def get(self, name: str):
         return self.request("get", "GET", name = str(name))
 
-    def delete(self, name: str) -> Coroutine[Any, Any, dict[str, Any]]:
+    def delete(self, name: str):
         return self.request("delete", "DELETE", name = str(name))
 
-    def all(self) -> Coroutine[Any, Any, dict[str, Any]]:
+    def all(self):
         return self.request("all")
 
-    def set(self, name: str, value: Any) -> Coroutine[Any, Any, dict[str, Any]]:
+    def set(self, name: str, value: Any):
         return self.request("set", "POST", name = str(name), value = value)
 
-    def add(self, name: str, value: int) -> Coroutine[Any, Any, dict[str, Any]]:
+    def add(self, name: str, value: int):
         return self.request("add", "PATCH", name = str(name), value = value)
 
-    def subtract(self, name: Any, value: int) -> Coroutine[Any, Any, dict[str, Any]]:
+    def subtract(self, name: Any, value: int):
         return self.request("subtract", "PATCH", name = str(name), value = value)
 
     async def close(self) -> None:
