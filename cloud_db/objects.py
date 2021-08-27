@@ -12,7 +12,7 @@ class Data:
         return str(self.value) if self.value else ''
 
     def __repr__(self) -> str:
-        return f'Data(name={self.name!r}, value={self.value})'
+        return f'Data(name={self.name}, value={self.value})'
 
 
 class Result:
@@ -23,23 +23,22 @@ class Result:
 
         self.success: bool = data.get("success", False)
         self.message: str = data.get("message")
-
-        number: int
-        if data.get("number"):
-            setattr(self, "number", int(data.get("number")))
+        self.number: Optional[int] = data.get("number")
 
     @property
-    def data(self) -> Optional[Union[Data, List[Data]]]:
+    def data(self) -> Union[Data, List[Data], None]:
         if self.__raw_data.get("name") or self.__raw_data.get("value"):
-            return_data: Dict[str, Any] = {"name": self.__raw_data.get("name"), "value": self.__raw_data.get("value")}
+            return_data: Dict[str, Any] = {
+                "name": self.__raw_data.get("name"),
+                "value": self.__raw_data.get("value")
+            }
             result: Data = Data(return_data)
         elif self.__raw_data.get("data"):
             result: List[Data] = [Data(field) for field in self.__raw_data.get("data")]
         else:
-            return []
+            return None
 
         return result
 
     def __repr__(self) -> str:
-        number_attr = f", number={self.number}" if hasattr(self, "number") else ""
-        return f'Result(success={self.success}, message={self.message}, data={self.data!r}{number_attr})'
+        return f"Result(success={self.success}, message={self.message}, data={self.data!r}, number={self.number})"

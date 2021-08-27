@@ -1,6 +1,6 @@
 import json
 from asyncio import sleep
-from typing import Any, ClassVar, Coroutine, Dict, Literal, TypeVar, Union
+from typing import Any, ClassVar, Dict, Literal, TypeVar, Union
 
 from aiohttp import ClientResponse, ClientSession
 
@@ -45,15 +45,15 @@ class HTTPClient:
             await self._create_session()
 
         extras: Dict[str, Any] = {}
-        if value:
-            extras['json'] = {"value": value}
+        if value is not None:
+            extras['value'] = value
 
         header = {"Authorization": str(self._key)}
         url = f"{self.BASE}/{endpoint}"
         if name is not None:
             url += f"?name={name}"
 
-        async with self._session.request(method, url, headers = header, **extras) as res:
+        async with self._session.request(method, url, headers = header, json = extras) as res:
             data = await json_or_text(res)
 
             if res.status == 200:
@@ -64,10 +64,10 @@ class HTTPClient:
                 if self._auto_retry:
                     await sleep(1)  # wait 1 second and try again.
                     return await self.request(endpoint, method, name = name, value = value)
+                else:
+                    raise OnCooldown(data["message"])
 
-                raise OnCooldown(data["message"])
-
-            if res.status == 404:
+            elif res.status == 404:
                 raise NotFound(data)
             elif res.status == 400:
                 if isinstance(data, dict) and data["message"] == "The Data is not a Number":
@@ -79,7 +79,7 @@ class HTTPClient:
                 raise HTTPException(res.status, data)
 
     def get(self, name: str):
-        return self.request("get", "GET", name = str(name))
+        return self.request("get", name = str(name))
 
     def delete(self, name: str):
         return self.request("delete", "DELETE", name = str(name))

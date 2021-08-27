@@ -11,13 +11,13 @@ with open("cloud_db/__init__.py") as f:
     content = f.read()
     version = search(
         r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', content, MULTILINE
-        ).group(1)
+    ).group(1)
     author = search(r'^__author__\s*=\s*[\'"]([^\'"]*)[\'"]', content, MULTILINE).group(
         1
-        )
+    )
     _license = search(
         r'^__license__\s*=\s*[\'"]([^\'"]*)[\'"]', content, MULTILINE
-        ).group(1)
+    ).group(1)
 
 setup(
     name = "cloud-db.py",
@@ -41,9 +41,9 @@ setup(
         "discord.py",
         "api",
         "wrapper"
-        ],
+    ],
     project_urls = {
         "Discord": "https://discord.gg/nEtTMS934g",
-        },
+    },
     python_requires = ">=3.8",
-    )
+)

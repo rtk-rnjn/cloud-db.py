@@ -14,6 +14,6 @@ from .client import Client
 from .errors import CloudDBException, HTTPException, NotFound, OnCooldown
 
 __author__ = "Soheab_"
-__version__ = "1.0.1"
+__version__ = "1.1"
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2021-present Soheab_'
