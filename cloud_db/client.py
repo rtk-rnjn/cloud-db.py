@@ -50,10 +50,7 @@ class Client:
             Result object or the key value if `only_value` is True.
         """
         result = await self._request.get(name)
-        if only_value:
-            return result.get("value")
-
-        return Result(result)
+        return result.get("value") if only_value else Result(result)
 
     async def delete(self, name: str, /) -> bool:
         """Delete all data associated with the key (name).
@@ -112,7 +109,7 @@ class Client:
             Boolean value of whether the addition was successful or a Result object if `return_data` is True.
         """
         result = await self._request.set(name, value)
-        if return_data is True:
+        if return_data:
             add_result = dict(result)
             add_result.update(name = name, value = value)
             return Result(add_result)
