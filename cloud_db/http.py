@@ -79,24 +79,23 @@ class HTTPClient:
                 raise HTTPException(res.status, data)
 
     def get(self, name: str):
-        return self.request("get", name = str(name))
+        return self.request("get", name=name)
 
     def delete(self, name: str):
-        return self.request("delete", "DELETE", name = str(name))
+        return self.request("delete", "DELETE", name=name)
 
     def all(self):
         return self.request("all")
 
     def set(self, name: str, value: Any):
-        return self.request("set", "POST", name = str(name), value = value)
+        return self.request("set", "POST", name=name, value = value)
 
     def add(self, name: str, value: int):
-        return self.request("add", "PATCH", name = str(name), value = value)
+        return self.request("add", "PATCH", name=name, value = value)
 
     def subtract(self, name: Any, value: int):
         return self.request("subtract", "PATCH", name = str(name), value = value)
 
     async def close(self) -> None:
-        if self._session:
-            if not self._session.closed:
-                await self._session.close()
+        if self._session and not self._session.closed:
+            await self._session.close()
